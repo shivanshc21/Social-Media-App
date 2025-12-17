@@ -2,6 +2,7 @@ import { LogIn } from 'lucide-react'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
+import Layout from './pages/Layout.jsx'
 import Feed from './pages/Feed'
 import Messages from './pages/Messages'
 import ChatBox from './pages/ChatBox'
@@ -9,12 +10,14 @@ import Connections from './pages/Connections'
 import Discover from './pages/Discover'
 import Profile from './pages/Profile'
 import CreatePost from './pages/CreatePost'
+import { useUser } from '@clerk/clerk-react'
 
 const App = () => {
+  const { isSignedIn } = useUser();
   return (
     <>
       <Routes>
-        <Route path='/' element={<Login/>}>
+        <Route path='/' element={!isSignedIn ? <Login/> : <Layout/>}>
           <Route index element={<Feed/>}/>
           <Route path='messages' element={<Messages/>}/>
           <Route path='messages/:userId' element={<ChatBox/>}/>
